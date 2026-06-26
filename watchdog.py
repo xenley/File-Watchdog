@@ -9,9 +9,8 @@ BASELINE_FILE = "baseline.json"
 # stuff we never want to track, add to this if you need to.
 IGNORE_LIST = [".git", "__pycache__", ".DS_Store", "baseline.json"]
 
-
 def hash_file(path, algo="sha256"):
-    # reading in chunks so big files don't kill memory.
+    # reading in small bits so big files don't kill the memory.
     if algo == "sha256":
         h = hashlib.sha256()
     elif algo == "md5":
@@ -44,7 +43,7 @@ def scan_folder(folder, algo="sha256"):
             try:
                 hashes[rel_path] = hash_file(full_path, algo)
             except (PermissionError, FileNotFoundError):
-                # file might be locked or got deleted mid-scan, then it skips.
+                # file might be locked or got deleted mid scan, then it skips.
                 print(f"couldn't read {rel_path}, skipping")
     return hashes
 
@@ -66,7 +65,7 @@ def load_baseline(folder):
     with open(path) as f:
         data = json.load(f)
 
-    # handle old baselines that were saved before this update
+    # handle old baselines that were saved before this will update.
     if "hashes" in data:
         return data["hashes"], data.get("algo", "sha256")
     else:
@@ -99,7 +98,7 @@ def main():
     mode = sys.argv[1]
     args = sys.argv[2:]
 
-    # pull out flags first, whatever's left over is the folder path
+    # pull out flags first, whatever's left over is the folder path.
     quiet = "--quiet" in args
     if quiet:
         args.remove("--quiet")
@@ -110,7 +109,7 @@ def main():
         try:
             algo = args[idx + 1]
         except IndexError:
-            print("--algo needs a value, e.g. --algo md5")
+            print("--algo needs a value, e.g. --algo md5.")
             return
         args.pop(idx + 1)
         args.pop(idx)
@@ -153,7 +152,7 @@ def main():
                 for f in removed:
                     print(f"  - {f}")
     else:
-        print(f"don't recognise '{mode}', use --init or --check")
+        print(f"don't recognise '{mode}', use --init or --check.")
 
 
 if __name__ == "__main__":
