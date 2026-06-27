@@ -9,6 +9,12 @@ BASELINE_FILE = "baseline.json"
 # stuff we never want to track, add to this if you need to.
 IGNORE_LIST = [".git", "__pycache__", ".DS_Store", "baseline.json"]
 
+# ansi colour codes, nothing fancy just plain terminal colours.
+GREEN = "\033[92m"
+RED = "\033[91m"
+YELLOW = "\033[93m"
+RESET = "\033[0m"
+
 def hash_file(path, algo="sha256"):
     # reading in small bits so big files don't kill the memory.
     if algo == "sha256":
@@ -136,21 +142,21 @@ def main():
 
         if not added and not removed and not changed:
             if not quiet:
-                print("\nall clear, nothing changed since last baseline!")
+                print(f"\n{GREEN}all clear, nothing changed since last baseline!{RESET}")
         else:
             print(f"\nscan finished at {time.strftime('%Y-%m-%d %H:%M:%S')}")
             if changed:
-                print(f"\n[MODIFIED] {len(changed)} file(s):")
+                print(f"\n{RED}[MODIFIED] {len(changed)} file(s):{RESET}")
                 for f in changed:
-                    print(f"  - {f}")
+                    print(f"  {RED}- {f}{RESET}")
             if added:
-                print(f"\n[NEW] {len(added)} file(s):")
+                print(f"\n{YELLOW}[NEW] {len(added)} file(s):{RESET}")
                 for f in added:
-                    print(f"  - {f}")
+                    print(f"  {YELLOW}- {f}{RESET}")
             if removed:
-                print(f"\n[MISSING] {len(removed)} file(s):")
+                print(f"\n{RED}[MISSING] {len(removed)} file(s):{RESET}")
                 for f in removed:
-                    print(f"  - {f}")
+                    print(f"  {RED}- {f}{RESET}")
     else:
         print(f"don't recognise '{mode}', use --init or --check.")
 
