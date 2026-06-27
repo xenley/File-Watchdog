@@ -41,9 +41,11 @@ scan finished at time it finished.
 [MISSING] 1 file(s):
   - file1.txt
 ```
+Modified and missing files show up in red, new files show up in yellow, and an all-clear scan shows up in green so its easier to tell whats going on at a glance.
 
 ## Notes
 - Uses Python standard library, nothing more to install.
 - The (`baseline.json`) gets saved inside the folder you're checking and then if you want to reset it do re run `--init`.
 - This won't catch someone editing a file and then editing it back to look identical content wise with a matching timestamp.
 - there's a ignore list near the top of the script so it doesn't track stuff you don't care about but add to it if you need to.
+- colours might not show properly on some windows terminals depending on setup, works fine on mac/linux and most modern terminals.
